@@ -1,0 +1,600 @@
+swagger: "2.0"
+info:
+  title: REST API de Toku.
+  description: "¡Bienvenido a Toku.! \U0001F916 \U0001F680\n\nEn esta documentación encontrarás lo necesario para utilizar nuestra API (Application Programming Interfaces), la cual es la interfaz para la integración del servicio prestado por Eliodoro junto con las aplicaciones y programas de nuestros clientes.\n\nToda la API de Toku. entrega respuestas en JSON con códigos HTTP para decir el éxito de la operación. En los _requests_ debes incluir el `Content-Type` como `application/json` y por ende, el body debe ser un JSON correcto.\n\nTodas las request deben ser hechas con este url base:"
+  version: 0.3.0
+host: api.toku.cl
+x-google-endpoints:
+  - name: api.toku.cl
+    allowCors: True
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /payments:
+    post:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Payment"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          schema:
+            $ref: "#/definitions/Message"
+        "201":
+          description: El pago fue creado con éxito.
+          schema:
+            $ref: "#/definitions/Message"
+        "401":
+          description: Falta de credenciales.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "403":
+          description: "Falta de permisos. No tienes por qué estar ahi \U0001F440."
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "404":
+          description: El recurso no fue encontrado.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "422":
+          description: Validation Error
+          schema:
+            $ref: "#/definitions/HTTPValidationError"
+        "429":
+          description: >-
+            Superaste el número máximos de request permitidos, espera un
+            poquito.
+          schema:
+            $ref: "#/definitions/HTTPError"
+      tags:
+        - "Pagos \U0001F4B3"
+      description: >
+        Crear o modificar un objeto **pago** asociado a una **deuda** en
+        específico.
+      operationId: create_update_payment_payments_create_post
+      summary: Crear o Modificar un Pago
+      x-google-backend:
+        address: https://eliodoro-api-t2ofb6oqkq-uc.a.run.app/payments/create
+        path_translation: CONSTANT_ADDRESS
+        protocol: h2
+      security:
+        - api_key: []
+
+    put:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Payment"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          schema:
+            $ref: "#/definitions/Message"
+        "401":
+          description: Falta de credenciales.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "403":
+          description: "Falta de permisos. No tienes por qué estar ahi \U0001F440."
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "404":
+          description: El recurso no fue encontrado.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "422":
+          description: Validation Error
+          schema:
+            $ref: "#/definitions/HTTPValidationError"
+        "429":
+          description: >-
+            Superaste el número máximos de request permitidos, espera un
+            poquito.
+          schema:
+            $ref: "#/definitions/HTTPError"
+      tags:
+        - "Pagos \U0001F4B3"
+      description: |
+        Modificar un objeto **pago** asociado a una **deuda** en específico.
+      operationId: Modificar_Pago_payments_update_put
+      summary: Modificar Pago
+      x-google-backend:
+        address: https://eliodoro-api-t2ofb6oqkq-uc.a.run.app/payments/update
+        path_translation: CONSTANT_ADDRESS
+        protocol: h2
+      security:
+        - api_key: []
+
+    delete:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/PaymentDelete"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          schema:
+            $ref: "#/definitions/Message"
+        "401":
+          description: Falta de credenciales.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "403":
+          description: "Falta de permisos. No tienes por qué estar ahi \U0001F440."
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "404":
+          description: El recurso no fue encontrado.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "422":
+          description: Validation Error
+          schema:
+            $ref: "#/definitions/HTTPValidationError"
+        "429":
+          description: >-
+            Superaste el número máximos de request permitidos, espera un
+            poquito.
+          schema:
+            $ref: "#/definitions/HTTPError"
+      tags:
+        - "Pagos \U0001F4B3"
+      description: >
+        Elimina un objeto **pago** creado anteriormente para una **deuda** en
+        específico.
+      operationId: delete_payment_payments_destroy_delete
+      summary: Borrar un objeto Payment
+      x-google-backend:
+        address: https://eliodoro-api-t2ofb6oqkq-uc.a.run.app/payments/destroy
+        path_translation: CONSTANT_ADDRESS
+        protocol: h2
+      security:
+        - api_key: []
+
+  /debts:
+    post:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Debt"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          schema:
+            $ref: "#/definitions/Message"
+        "201":
+          description: La deuda fue creada con éxito.
+          schema:
+            $ref: "#/definitions/Message"
+        "401":
+          description: Falta de credenciales.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "403":
+          description: "Falta de permisos. No tienes por qué estar ahi \U0001F440."
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "404":
+          description: El recurso no fue encontrado.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "422":
+          description: Validation Error
+          schema:
+            $ref: "#/definitions/HTTPValidationError"
+        "429":
+          description: >-
+            Superaste el número máximos de request permitidos, espera un
+            poquito.
+          schema:
+            $ref: "#/definitions/HTTPError"
+      tags:
+        - "Deudas \U0001F4B0"
+      description: >
+        Crea o modifica un objeto **deuda** la cual representa una unidad a la
+        cual Eliodoro debe contactar. 
+
+
+        Mientras más datos ingreses, es más probable que Eliodoro pueda
+        responder más preguntas de sus deudores.
+      operationId: Crear_o_Modificar_Deuda_debts_post
+      summary: Crear o Modificar Deuda
+      x-google-backend:
+        address: https://eliodoro-api-t2ofb6oqkq-uc.a.run.app/debts
+        path_translation: CONSTANT_ADDRESS
+        protocol: h2
+      security:
+        - api_key: []
+
+    put:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Debt"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          schema:
+            $ref: "#/definitions/Message"
+        "401":
+          description: Falta de credenciales.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "403":
+          description: "Falta de permisos. No tienes por qué estar ahi \U0001F440."
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "404":
+          description: El recurso no fue encontrado.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "422":
+          description: Validation Error
+          schema:
+            $ref: "#/definitions/HTTPValidationError"
+        "429":
+          description: >-
+            Superaste el número máximos de request permitidos, espera un
+            poquito.
+          schema:
+            $ref: "#/definitions/HTTPError"
+      tags:
+        - "Deudas \U0001F4B0"
+      description: >
+        Modifica un objeto **deuda** la cual representa una unidad a la que
+        Eliodoro debe contactar.
+      operationId: Modificar_Deuda_debts_put
+      summary: Modificar Deuda
+      x-google-backend:
+        address: https://eliodoro-api-t2ofb6oqkq-uc.a.run.app/debts
+        path_translation: CONSTANT_ADDRESS
+        protocol: h2
+      security:
+        - api_key: []
+
+    delete:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Debt"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          schema:
+            $ref: "#/definitions/Message"
+        "401":
+          description: Falta de credenciales.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "403":
+          description: "Falta de permisos. No tienes por qué estar ahi \U0001F440."
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "404":
+          description: El recurso no fue encontrado.
+          schema:
+            $ref: "#/definitions/HTTPError"
+        "422":
+          description: Validation Error
+          schema:
+            $ref: "#/definitions/HTTPValidationError"
+        "429":
+          description: >-
+            Superaste el número máximos de request permitidos, espera un
+            poquito.
+          schema:
+            $ref: "#/definitions/HTTPError"
+      tags:
+        - "Deudas \U0001F4B0"
+      description: >
+        Elimina un objeto **deuda** junto con las interacciones que hayan
+        sucedido bajo esta **deuda** con el deudor.
+      operationId: Eliminar_Deuda_debts_delete
+      summary: Eliminar Deuda
+      x-google-backend:
+        address: https://eliodoro-api-t2ofb6oqkq-uc.a.run.app/debts
+        path_translation: CONSTANT_ADDRESS
+        protocol: h2
+      security:
+        - api_key: []
+
+definitions:
+  Debt:
+    description: >-
+      Objeto Debt, representa una **deuda** que un deudor tiene contigo y que
+      quieres contactar. 
+
+
+      A partir de este objeto nosotros tomamos decisiones acerca de la hora y el
+      canal a contactar, por lo que mientras más información mandes por deuda,
+      mejor trabajo hará Eliodoro.
+    properties:
+      car_brand:
+        description: >-
+          Marca de auto asociada a la deuda. **Nota**: Esta variable fue
+          construida específicamente para la industria de seguros de auto.
+        title: Car Brand
+        type: string
+      car_model:
+        description: >-
+          Modelo de auto asociado a la deuda. **Nota**: Esta variable fue
+          construida específicamente para la industria de seguros de auto.
+        title: Car Model
+        type: string
+      debt_amount:
+        description: "El monto de la deuda en pesos chilenos sin puntos. Por ejemplo, 10000."
+        minimum: 1
+        title: Debt Amount
+        type: integer
+      debtor_name:
+        description: >-
+          Nombre con el cual nos referiremos al deudor, aquí puedes
+          personalizarlo todo lo que quieras. Entrégalo como nombre propio: Juan
+          Nieves.
+        example: El Juan Nieves
+        maxLength: 100
+        title: Debtor Name
+        type: string
+      debtor_rut:
+        description: >-
+          Rut del deudor sin puntos ni guión. Por ejemplo, si el rut es
+          12.345.678-K, entonces entrégalo así: 12345678K.
+        example: 12345678K
+        title: Debtor Rut
+        type: string
+      default_reason:
+        description: >-
+          Contiene la razón de rechazo de la deuda con la primera letra en
+          mayúsculas.
+        title: Default Reason
+        type: string
+      email:
+        description: Correo del deudor a contactar.
+        title: Email
+        type: string
+      link_pat:
+        description: >-
+          Link para inscribir (o actualizar) el pago automático con tarjeta (o
+          PAT). Debe ser un url válido, por lo que debe comenzar con `http://` o
+          `https://`.
+        example: "https://www.google.cl"
+        title: Link Pat
+        type: string
+      link_payment:
+        description: >-
+          Link de pago para el deudor específico. Se recomienda que sea único
+          para que haya seguimiento de este link. Debe partir con `http://` o
+          `https://`.
+        example: "https://www.google.cl"
+        title: Link Payment
+        type: string
+      period_id:
+        description: >-
+          El ID que usas para referenciar el periodo de la deuda que nos has
+          dado. Debe estar en formato AAAAMM, sólo se admiten 6 caracteres.
+        example: "202008"
+        maxLength: 6
+        minLength: 6
+        pattern: '^20\d{2}(1[0-2]{1}|0[1-9]{1})'
+        title: Period Id
+        type: string
+      phone_number:
+        description: >-
+          Número de teléfono del deudor a contactar. Este número debe ser de
+          celular dado los canales con los que nos comunicamos. Se admite sólo
+          el siguiente formato: '+56987654321'.
+        example: "+56987658765"
+        maxLength: 20
+        minLength: 6
+        title: Phone Number
+        type: string
+      product_id:
+        description: >-
+          El ID con el que reconoces la deuda (o el producto adeudado) que nos
+          has dado. Largo permitido: 1 - 256 caracteres.
+        example: 9897af7987d9245d
+        maxLength: 256
+        minLength: 1
+        title: Product Id
+        type: string
+      regular_payment_method:
+        $ref: "#/definitions/PaymentMethod"
+    required:
+      - product_id
+      - period_id
+    title: Debt
+    type: object
+  HTTPError:
+    properties:
+      code:
+        title: Code
+        type: integer
+      message:
+        title: Message
+        type: string
+    required:
+      - code
+      - message
+    title: HTTPError
+    type: object
+  HTTPValidationError:
+    properties:
+      detail:
+        items:
+          $ref: "#/definitions/ValidationError"
+        title: Detail
+        type: array
+    title: HTTPValidationError
+    type: object
+  Message:
+    description: >-
+      Respuesta predeterminada que entrega feedback al respecto de cómo resultó
+      la request.
+    properties:
+      message:
+        title: Message
+        type: string
+    required:
+      - message
+    title: Message
+    type: object
+  Payment:
+    description: >-
+      Objeto que representa un **Pago** hecho por algún deudor.
+
+
+      En particular, este objeto es de gran importancia puesto que una vez
+      creado, Eliodoro puede responder preguntas nuevas y también, dejará de
+      mandar mensajes durante lo que dure la campaña.
+    properties:
+      payment_amount:
+        description: El monto que se pagó de la deuda.
+        example: 10000
+        minimum: 0
+        title: Payment Amount
+        type: integer
+      payment_date:
+        description: >-
+          Fecha y hora en la cual se registro el pago de la deuda en su sistema.
+          Debe estar en formato [ISO 8601](https://www.w3.org/TR/NOTE-datetime).
+           Puede ser sólo la fecha (2020-08-26) o como timestamp (2020-08-26T12:06:34Z), ten en consideración que se asumirá hora UTC en tanto no especifiques lo contrario.
+        example: "2020-08-16T19:20:30-04:00"
+        format: date-time
+        title: Payment Date
+        type: string
+      payment_method:
+        $ref: "#/definitions/PaymentMethod"
+      period_id:
+        description: >-
+          El ID que usas para referenciar el periodo de la deuda que nos has
+          dado. Debe estar en formato AAAAMM, sólo se admiten 6 caracteres.
+        example: "202008"
+        maxLength: 6
+        minLength: 6
+        pattern: '^20\d{2}(1[0-2]{1}|0[1-9]{1})'
+        title: Period Id
+        type: string
+      product_id:
+        description: >-
+          El ID con el que reconoces la deuda (o el producto adeudado) que nos
+          has dado. Largo permitido: 1 - 256 caracteres.
+        example: 9897af7987d9245d
+        maxLength: 256
+        minLength: 1
+        title: Product Id
+        type: string
+    required:
+      - product_id
+      - period_id
+    title: Payment
+    type: object
+  PaymentDelete:
+    description: Objeto que representa un **Pago** y que quieres eliminar.
+    properties:
+      period_id:
+        description: >-
+          El ID que usas para referenciar el periodo de la deuda que nos has
+          dado. Debe estar en formato AAAAMM, sólo se admiten 6 caracteres.
+        example: "202008"
+        maxLength: 6
+        minLength: 6
+        pattern: '^20\d{2}(1[0-2]{1}|0[1-9]{1})'
+        title: Period Id
+        type: string
+      product_id:
+        description: >-
+          El ID con el que reconoces la deuda (o el producto adeudado) que nos
+          has dado. Largo permitido: 1 - 256 caracteres.
+        example: 9897af7987d9245d
+        maxLength: 256
+        minLength: 1
+        title: Product Id
+        type: string
+    required:
+      - product_id
+      - period_id
+    title: PaymentDelete
+    type: object
+  PaymentMethod:
+    description: Método ocupado por el deudor para realizar el pago.
+    enum:
+      - PAC
+      - PAT
+      - WebPay
+      - Transference
+      - Other
+    title: PaymentMethod
+    type: string
+  ValidationError:
+    properties:
+      loc:
+        items:
+          type: string
+        title: Location
+        type: array
+      msg:
+        title: Message
+        type: string
+      type:
+        title: Error Type
+        type: string
+    required:
+      - loc
+      - msg
+      - type
+    title: ValidationError
+    type: object
+tags:
+  - description: >-
+      Los objetos _Payment_ representan el **pago** hecho de una **deuda** que
+      está registrada con nosotros.
+    name: "Pagos \U0001F4B3"
+  - description: "Los objetos _Debt_ representan una **deuda** que algún deudor tiene con el cliente. Este objeto es la principal fuente de información para que Eliodoro determine la mejor hora y canal por el cual contactarse con dicho deudor, así que procura darnos al menos el email y el número de telefono para sacarle el mayor provecho a nuestro servicio y a Eliodoro \U0001F609."
+    name: "Deudas \U0001F4B0"
+x-components: {}
+
+securityDefinitions:
+  # This section configures basic authentication with an API key.
+  api_key:
+    type: "apiKey"
+    name: "x-api-key"
+    in: "header"

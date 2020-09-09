@@ -1,0 +1,33 @@
+{{= data.tags.section }}
+
+# Autenticación
+
+Puedes comunicarte con nuestra API una vez que te hayas registrado con nosotros y te hayamos compartido una API Key, la cual debes poner en cada una de las llamadas hacia nosotros como se describe a continuación:
+
+{{ for (var s in data.api.components.securitySchemes) { }}
+{{ var sd = data.api.components.securitySchemes[s]; }}
+{{? sd.type == 'apiKey' }}
+* API Key ({{=s}})
+    - Nombre del parámetro: **{{=sd.name}}**, in: {{=sd.in}}. {{=sd.description || ''}}
+{{?}}
+{{? sd.type == 'http'}}
+- Autenticación HTTP, esquema: {{=sd.scheme}} {{=sd.description || ''}}
+{{?}}
+{{? sd.type == 'oauth2'}}
+- Autenticación por OAuth2 . {{=sd.description || ''}}
+{{ for (var f in sd.flows) { }}
+{{ var flow = sd.flows[f]; }}
+    - Flow: {{=f}}
+{{? flow.authorizationUrl}}    - Authorization URL = [{{=flow.authorizationUrl}}]({{=flow.authorizationUrl}}){{?}}
+{{? flow.tokenUrl}}    - Token URL = [{{=flow.tokenUrl}}]({{=flow.tokenUrl}}){{?}}
+{{? flow.scopes && Object.keys(flow.scopes).length}}
+|Scope|Descripción del Scope|
+|---|---|
+{{ for (var sc in flow.scopes) { }}|{{=sc}}|{{=data.utils.join(flow.scopes[sc])}}|
+{{ } /* of scopes */ }}
+{{?}}
+{{ } /* of flows */ }}
+{{?}}
+{{ } /* of securitySchemes */ }}
+
+{{= data.tags.endSection }}

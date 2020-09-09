@@ -1,0 +1,14 @@
+import json
+import requests
+{{?data.allHeaders.length}}headers = {
+{{~data.allHeaders :p:index}}  '{{=p.name}}': {{=p.exampleValues.json}}{{?index < data.allHeaders.length-1}},{{?}}
+{{~}}}
+{{?}}
+{{?data.bodyParameter.present}}body = json.dumps({{=data.bodyParameter.exampleValues.json}})
+
+{{?}}
+r = requests.{{=data.method.verb}}('{{=data.url}}'{{? data.requiredParameters.length}}, params={
+{{~ data.requiredParameters :p:index}}  '{{=p.name}}': {{=p.exampleValues.json}}{{? data.requiredParameters.length-1 != index }},{{?}}{{~}}
+}{{?}}{{?data.allHeaders.length}}, {{?data.bodyParameter.present}}data = body{{?}},  headers = headers{{?}})
+
+print(r.json())
