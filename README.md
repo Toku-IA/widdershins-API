@@ -43,7 +43,7 @@ More in-depth documentation is [available here](https://mermade.github.io/widder
 ### Examples
 
 ```
-node widdershins --search false --language_tabs 'ruby:Ruby' 'python:Python' --summary defs/petstore3.json -o petstore3.md
+node widdershins.js --summary --expandBody ./api-gateway-prod.yaml -o index.html.md
 ```
 
 ### Options
